@@ -3,6 +3,18 @@
         "port" : 5000,
         "logLevel": "info"
     },
+    "smsProviders":{
+        "twilio" : {
+            "baseURL" : "https://api.twilio.com",
+            "apiVersion" : "2010-04-01",
+            "senderName" : "Jilani",
+            "mode" : "Number",
+            "endpoint" : "/Messages.json",
+            "accountSID" : "AC0aab93dc8115aebc2d1ed3c0c559a455",
+            "authToken" : "3d45d42f48ff42b197f86ffc7d667772",
+            "fromNumber" : "+12136993804"
+        }
+    },
     "emailProviders" : {
         "email": {
             "server": "gmail",

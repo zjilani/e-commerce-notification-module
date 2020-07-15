@@ -2,18 +2,26 @@ const config = require('../../config/index')
 const emailConfig = config.emailProviders.email
 
 const fs = require("fs")
-const hbs = require('hbs');
+const Handlebars = require("handlebars");
 const nodemailer = require('nodemailer')
 
 const smtpMailer = require(`../../helpers/smtpMailer.js`)
 
 class Email {
-    constructor(fastify, emailRequest) {
+    constructor(fastify, emailRequest,otp) {
         this.fastify = fastify
-        this.emailRequest = emailRequest.email
+        this.emailRequest = emailRequest
+        this.otp = otp
+
+        var template_content = fs.readFileSync(`${__dirname}/../../templates/email/`+ `otp` + `.handlebars`, 'utf8')
         
-        const template_content = fs.readFileSync(`${__dirname}/../../templates/email/`+ `otp` + `.hbs`, 'utf8')
-        this.htmlContent = template_content
+        var template = Handlebars.compile(template_content)
+        
+        
+        var data = { "name": this.emailRequest.userName , "otp" : this.otp}
+
+        this.htmlContent = template(data)
+        
     }
     sendEmail(){
 
@@ -33,8 +41,8 @@ class Email {
             }
         // let transporter = nodemailer.createTransport(options);
         let message = {
-            from: '"' + emailConfig.senderName + '" <' + emailConfig.senderEmail + '>',
-            to: " <"+receiver+">",
+            from: "COLOSSAL <" + emailConfig.senderEmail + ">",
+            to: receiver.userName+ " <"+receiver.email+">",
             subject: "Colossal Verification",
             html: this.htmlContent,            
             // attachments:[{
@@ -44,7 +52,7 @@ class Email {
             // }],
         };
 
-        console.log(receiver)
+        // console.log(receiver)
         return smtpMailer(fastify,options,message)
 
         // verify connection configuration

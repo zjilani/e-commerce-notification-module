@@ -11,16 +11,22 @@ const routes = [
         handler: controllers.sendSMS,
         schema: documentation.sendSMS,
         // preValidation: validators.validateSendSMSRequest
-    }
-    ,
+    },
     {
         method: "POST",
         url: "/sendMail",
         handler: controllers.sendMail,
         schema: documentation.sendMail,
+        preValidation: validators.validateSendMailRequest
+    },
+    {
+        method: "POST",
+        url: "/otpVerification",
+        handler: controllers.otpVerification,
+        schema: documentation.otpVerification,
         // preValidation: validators.validateSendSMSRequest
     }
-    
+
 ]
 
 

@@ -1,44 +1,78 @@
 const Email = require('./emailProvider/email.js')
+const Twilio = require('./smsProvider/twilio.js')
 const axios = require('axios')
 const Nexmo = require('nexmo')
 
 
-const sendSMS = async(fastify,sendSMSRequest)=>{
-    // const { mobileNo } = await Customer.findOne({customerId:sendSMSRequest.customerId}) 
-    const nexmo = new Nexmo({
-        apiKey: '16e111e5',
-        apiSecret: 'qzOsov6s7JvZfuVF',
-      });
-    
-    
-    const from = 'Vonage APIs';
-    const to = '91'+mobileNo;
-    const text = 'Your Colossal Verification code is: 1234';
-      
-    nexmo.message.sendSms(from, to, text);
-    console.log("Done Message")
-
-    return {
-        response : "success"
-    }
-}
-
-const emailProvider = async(fastify, emailRequest)=>{
-    // const { email } = await Customer.findOne({customerId:emailRequest.customerId}) 
+const smsProvider = async(fastify,smsRequest)=>{
     try {
-        const customer = await axios.get('http://127.0.0.1:3000/getCustomer?'+'customerId='+emailRequest.customerId)
+        const customer = await axios.get('http://127.0.0.1:3000/getCustomer?'+'customerId='+smsRequest.customerId)
+        // console.log(customer)
+        const sms = new Twilio(fastify, customer.data.data);
+        return sms.sendSMS();
+        // console.log(sms)
         
     } catch (error) {
         return {
             response : "Not Found"
         }
     }
-    const mail =  new Email(fastify, customer.data.data)
-    console.log(mail)
-    return mail.sendEmail()
+    
 }
 
-module.exports ={
-    sendSMS,
-    emailProvider
+const emailProvider = async(fastify, emailRequest)=>{
+    try {
+        const customer = await axios.get('http://127.0.0.1:3000/getCustomer?'+'customerId='+emailRequest.customerId)
+        const generateOTP=() =>{ 
+ 
+            var digits = '0123456789'; 
+            let OTP = ''; 
+            for (let i = 0; i < 4; i++ ) { 
+                OTP += digits[Math.floor(Math.random() * 10)]; 
+            } 
+            return OTP; 
+        }
+        const otp = generateOTP()
+        const customerId = customer.data.data.customerId
+        const updatedCustomer = await axios.post("http://localhost:3000/updateCustomer?customerId="+customerId,{otp:otp})
+        
+        const mail =  new Email(fastify, customer.data.data,otp)
+        
+        return mail.sendEmail()
+        
+    } catch (error) {
+        // console.log(error)
+        return {
+            response : "Not Found"
+        }
+    }
+    
 }
+
+const otpVerification = async(fastify,otpRequest)=>{
+    try {
+        const customer = await axios.get('http://127.0.0.1:3000/getCustomer?'+'customerId='+otpRequest.customerId)
+        const otpVerified = true
+        
+        if(customer.data.data.otp === otpRequest.otp){
+           const updateCustomer= await axios.post("http://localhost:3000/updateCustomer?customerId="+otpRequest.customerId,{otpVerified:otpVerified})
+        //    console.log(updateCustomer.data.data)
+        }
+        return { response:"Done verification"}
+        
+    } catch (error) {
+        return {
+            response : "Not Found"
+        }
+    }
+    
+}
+
+
+
+module.exports ={
+    smsProvider,
+    emailProvider,
+    otpVerification
+}
+

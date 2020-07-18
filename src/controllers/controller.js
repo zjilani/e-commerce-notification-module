@@ -39,23 +39,7 @@ exports.sendMail = async (req, res) => {
         throw new HttpError('failiure', 2001, "Mail sending failed", e.message)
     }
 }
-exports.otpVerification = async (req, res) => {
-    try {
-        let response = await services.otpVerification(req.fastify, req.query)
-        if(response.response  === "Not Found"){
-            // console.log(response)
-            res.code(400)
-            throw new HttpError('failure', 22005, "Check CustomerId")
-        }
-        return res.status(201).send({
-            status: 'success',
-            data: response
-        })
-    } catch (e) {
-        res.code(500)
-        throw new HttpError('failiure', 2001, "OTP Verification failed", e.message)
-    }
-}
+
 
 
 

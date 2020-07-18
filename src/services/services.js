@@ -1,7 +1,6 @@
 const Email = require('./emailProvider/email.js')
 const Twilio = require('./smsProvider/twilio.js')
 const axios = require('axios')
-const Nexmo = require('nexmo')
 
 
 const smsProvider = async(fastify,smsRequest)=>{
@@ -49,30 +48,9 @@ const emailProvider = async(fastify, emailRequest)=>{
     
 }
 
-const otpVerification = async(fastify,otpRequest)=>{
-    try {
-        const customer = await axios.get('http://127.0.0.1:3000/getCustomer?'+'customerId='+otpRequest.customerId)
-        const otpVerified = true
-        
-        if(customer.data.data.otp === otpRequest.otp){
-           const updateCustomer= await axios.post("http://localhost:3000/updateCustomer?customerId="+otpRequest.customerId,{otpVerified:otpVerified})
-        //    console.log(updateCustomer.data.data)
-        }
-        return { response:"Done verification"}
-        
-    } catch (error) {
-        return {
-            response : "Not Found"
-        }
-    }
-    
-}
-
-
 
 module.exports ={
     smsProvider,
-    emailProvider,
-    otpVerification
+    emailProvider
 }
 

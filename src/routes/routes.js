@@ -18,15 +18,7 @@ const routes = [
         handler: controllers.sendMail,
         schema: documentation.sendMail,
         preValidation: validators.validateSendMailRequest
-    },
-    {
-        method: "POST",
-        url: "/otpVerification",
-        handler: controllers.otpVerification,
-        schema: documentation.otpVerification,
-        // preValidation: validators.validateSendSMSRequest
     }
-
 ]
 
 

@@ -10,9 +10,9 @@
             "senderName" : "Jilani",
             "mode" : "Number",
             "endpoint" : "/Messages.json",
-            "accountSID" : "AC0aab93dc8115aebc2d1ed3c0c559a455",
-            "authToken" : "3d45d42f48ff42b197f86ffc7d667772",
-            "fromNumber" : "+12136993804"
+            "accountSID" : "$accountSID",
+            "authToken" : "$authToken",
+            "fromNumber" : "$fromNumber"
         }
     },
     "emailProviders" : {
@@ -20,8 +20,8 @@
             "server": "gmail",
             "port": 587,
             "senderName" : "Jilani",
-            "senderEmail" : "zaidjilani.09@gmail.com",
-            "username" : "zaidjilani.09@gmail.com",
+            "senderEmail" : "zaidjilani9@gmail.com",
+            "username" : "zaidjilani9@gmail.com",
             "apiKey" : "$apiKey"
 
         }

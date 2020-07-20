@@ -26,7 +26,7 @@ class Notify {
             for(let i=0 ; i< this.notifyRequest.productName.length ; i++){
                 data.push({ "productName" : this.notifyRequest.productName[i] , "quantity" : this.notifyRequest.quantity[i]})
             }
-            var Data = { data }
+            var Data = { data , "amount" : this.notifyRequest.amount}
             this.htmlContent = template(Data)
             
         }

@@ -1,5 +1,6 @@
 const Email = require('./emailProvider/email.js')
 const Twilio = require('./smsProvider/twilio.js')
+const Notify = require('./notification/notify.js')
 const axios = require('axios')
 
 
@@ -47,10 +48,27 @@ const emailProvider = async(fastify, emailRequest)=>{
     }
     
 }
+const notifyCustomer = async(fastify,notifyRequest)=>{
+    try {
+        const customer = await axios.get('http://127.0.0.1:3000/getCustomer?'+'customerId='+notifyRequest.customerId)
+        
+        const notify = new Notify(fastify, customer.data.data,notifyRequest);
 
+        return notify.sendNotification();
+    
+        
+    } catch (error) {
+        console.log(error)
+        return {
+            response : "Not Found"
+        }
+    }
+    
+}
 
 module.exports ={
     smsProvider,
-    emailProvider
+    emailProvider,
+    notifyCustomer
 }
 

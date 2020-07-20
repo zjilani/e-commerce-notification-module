@@ -18,6 +18,12 @@ const routes = [
         handler: controllers.sendMail,
         schema: documentation.sendMail,
         preValidation: validators.validateSendMailRequest
+    },
+    {
+        method: "POST",
+        url: "/notifyCustomer",
+        handler: controllers.notifyCustomer,
+        schema: documentation.notifyCustomer,
     }
 ]
 

@@ -20,8 +20,8 @@
             "server": "gmail",
             "port": 587,
             "senderName" : "Jilani",
-            "senderEmail" : "zaidjilani9@gmail.com",
-            "username" : "zaidjilani9@gmail.com",
+            "senderEmail" : "zaidjilani.09@gmail.com",
+            "username" : "zaidjilani.09@gmail.com",
             "apiKey" : "$apiKey"
 
         }

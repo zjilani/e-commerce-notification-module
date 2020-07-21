@@ -219,11 +219,15 @@ exports.sendSMS = {
                         "items":{
                             "type":"number"
                         }
+                    },
+                    "amount":{
+                        "type":"number"
                     }
                 },
                 "required": [
                     "customerId",
-                    "subject"
+                    "subject",
+                    "template"
                 ]
             },
             response: {

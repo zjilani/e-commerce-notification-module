@@ -10,9 +10,9 @@
             "senderName" : "Jilani",
             "mode" : "Number",
             "endpoint" : "/Messages.json",
-            "accountSID" : "$accountSID",
-            "authToken" : "$authToken",
-            "fromNumber" : "$fromNumber"
+            "accountSID" : "$ACCOUNT_SID",
+            "authToken" : "$AUTH_TOKEN",
+            "fromNumber" : "$FROM_NUMBER"
         }
     },
     "emailProviders" : {
@@ -20,16 +20,16 @@
             "server": "gmail",
             "port": 587,
             "senderName" : "Jilani",
-            "senderEmail" : "zaidjilani.09@gmail.com",
-            "username" : "zaidjilani.09@gmail.com",
-            "apiKey" : "$apiKey"
+            "senderEmail" : "$EMAIL",
+            "username" : "$EMAIL",
+            "apiKey" : "$API_KEY"
 
         }
     },
     "maxPaginationSize":"20",
     "environment":"$ENVIRONMENT",
     "mongodb" : {
-        "baseURL" : "$baseURL",
+        "baseURL" : "$BASE_URL",
         "dbName" : "CUSTOMER",
         "debug" : "false",
         "username" : "$MONGODB_USER",

@@ -89,12 +89,15 @@ fastify.setErrorHandler(function (error, request, reply) {
 
 // Run the server!
 appconfig = config.server
-fastify.listen(appconfig.port, function (err, address) {
+const PORT = process.env.PORT || 5000
+const host = '0.0.0.0';
+
+fastify.listen(PORT,host, function (err, address) {
   if (err) {  
     fastify.log.error(err)
     process.exit(1)
   } else {
     // fastify.swagger()
-    fastify.log.info(`server listening on ${fastify.server.address().port}`)
+    fastify.log.info(`server listening on ${PORT}`)
   }
 });

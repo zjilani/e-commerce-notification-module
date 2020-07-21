@@ -6,7 +6,7 @@ const axios = require('axios')
 
 const smsProvider = async(fastify,smsRequest)=>{
     try {
-        const customer = await axios.get('http://127.0.0.1:3000/getCustomer?'+'customerId='+smsRequest.customerId)
+        const customer = await axios.get('https://jilani-e-commerce-customer.herokuapp.com/getCustomer?'+'customerId='+smsRequest.customerId)
         // console.log(customer)
         const sms = new Twilio(fastify, customer.data.data);
         return sms.sendSMS();
@@ -22,7 +22,7 @@ const smsProvider = async(fastify,smsRequest)=>{
 
 const emailProvider = async(fastify, emailRequest)=>{
     try {
-        const customer = await axios.get('http://127.0.0.1:3000/getCustomer?'+'customerId='+emailRequest.customerId)
+        const customer = await axios.get('https://jilani-e-commerce-customer.herokuapp.com/getCustomer?'+'customerId='+emailRequest.customerId)
         const generateOTP=() =>{ 
  
             var digits = '0123456789'; 
@@ -34,7 +34,7 @@ const emailProvider = async(fastify, emailRequest)=>{
         }
         const otp = generateOTP()
         const customerId = customer.data.data.customerId
-        const updatedCustomer = await axios.post("http://localhost:3000/updateCustomer?customerId="+customerId,{otp:otp})
+        const updatedCustomer = await axios.post("https://jilani-e-commerce-customer.herokuapp.com/updateCustomer?customerId="+customerId,{otp:otp})
         
         const mail =  new Email(fastify, customer.data.data,otp)
         
@@ -50,7 +50,7 @@ const emailProvider = async(fastify, emailRequest)=>{
 }
 const notifyCustomer = async(fastify,notifyRequest)=>{
     try {
-        const customer = await axios.get('http://127.0.0.1:3000/getCustomer?'+'customerId='+notifyRequest.customerId)
+        const customer = await axios.get('https://jilani-e-commerce-customer.herokuapp.com/getCustomer?'+'customerId='+notifyRequest.customerId)
         
         const notify = new Notify(fastify, customer.data.data,notifyRequest);
 
